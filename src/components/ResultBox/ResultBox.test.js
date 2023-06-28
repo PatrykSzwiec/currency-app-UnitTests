@@ -49,7 +49,7 @@ const testCases = [
       }
     });
 
-    it('should render proper info about conversion when PLN -> PLN or USD -> USD', () => { 
+    it('should render proper info about conversion when PLN -> PLN or USD -> USD', () => {
       for(const testObj of testCases) {
         render(<ResultBox from={testObj.from} to={testObj.to} amount={parseInt(testObj.amount)} />);
         const output = screen.getByTestId('amount-output');
@@ -57,4 +57,11 @@ const testCases = [
         cleanup();
       }
     });
+
+    it('should render "Wrong value..." when value is < 0', () => {
+      render(<ResultBox from='USD' to='PLN' amount={-1} />);
+      const output = screen.getByTestId('wrong-output');
+      expect(output).toHaveTextContent('Wrong value...');
+      cleanup();
+  });
 });
